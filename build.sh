@@ -12,7 +12,7 @@ mkdir -p "$BIN_DIR"
 
 echo "=== Compilation du FrontControllerServlet ==="
 # On inclut le servlet-api.jar dans le classpath (-cp) pour la compilation
-javac -cp "$LIB_DIR/*" -d "$BIN_DIR" "$SRC_DIR"/com/dev/itFramework/FrontControllerServlet.java
+javac -cp "$LIB_DIR/*:$SRC_DIR" -d "$BIN_DIR" "$SRC_DIR"/com/dev/itFramework/FrontControllerServlet.java
 
 if [ $? -eq 0 ]; then
     echo "Compilation réussie."
