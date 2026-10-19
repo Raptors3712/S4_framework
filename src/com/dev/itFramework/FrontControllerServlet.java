@@ -7,19 +7,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.Map;
-import java.util.List;
 import java.lang.Override;
 import java.util.ArrayList;
-import com.dev.itFramework.Controller;
-import com.dev.itFramework.utils.ClassMethod;
+import java.util.List;
 import com.dev.itFramework.utils.ListeControllerAnnote;
+import com.dev.itFramework.Controller;
 
 public class FrontControllerServlet extends HttpServlet
 {
 
     private List<Class<?>> controllers;
-    private Map<String, ClassMethod> mappingUrls;
 
     @Override
     public void init() throws ServletException {
@@ -29,7 +26,6 @@ public class FrontControllerServlet extends HttpServlet
             for (String p : initTestControllers.split(";")) {
                 controllers.addAll(ListeControllerAnnote.getController(Controller.class, p));
             }
-            mappingUrls = ListeControllerAnnote.getMapping(controllers);
         }
         catch (Exception e) {
             throw new ServletException(e);
@@ -53,41 +49,16 @@ public class FrontControllerServlet extends HttpServlet
     {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        // String methode = request.getMethod();
-
-        out.println("<html>");
-        out.println("<head><title>S4_framework</title></head>");
-        out.println("<body>");
 
         String path = request.getServletPath();
+        String methode = request.getMethod();
 
-        if (mappingUrls != null && mappingUrls.containsKey(path)) {
-            ClassMethod mapping = mappingUrls.get(path);
-
-            out.println("<h1>Ça marche!</h1>");
-            out.println("<p><strong>Méthode:</strong> " + request.getMethod() + "</p>");
-            out.println("<p><strong>Route:</strong> " + path + "</p>");
-            out.println("<p><strong>Action:</strong> " + mapping.getClazz().getName() + "::" + mapping.getMethode().getName() + "</p>");
-        } else {
-            out.println("<h1>Route inconnue!</h1>");
-            out.println("<p>");
-            out.println("<strong>Actions connues:</strong>");
-            out.println("<ul>");
-
-            if (mappingUrls != null && !mappingUrls.isEmpty()) {
-                for (String url : mappingUrls.keySet()) {
-                    ClassMethod mapping = mappingUrls.get(url);
-                    out.println("<li>" + url + " → " + mapping.getClazz().getName() + "::" + mapping.getMethode().getName() + "</li>");
-                }
-            } else {
-                out.println("<li>Aucune route trouvée</li>");
-            }
-
-            out.println("</ul>");
-            out.println("</p>");
+        out.println("ETU004331");
+        out.println("OK sprint1!");
+        out.println("Methode = " + methode);
+        out.println("URL = " + path);
+        for (Class<?> controller : controllers) {
+            out.println(controller.getName());
         }
-
-        out.println("</body>");
-        out.println("</html>");
     }
 }
